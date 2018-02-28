@@ -294,7 +294,7 @@ HomePreview.Unity/[Oo]bj/
 HomePreview.Unity/[Bb]uild/
 HomePreview.Unity/[Bb]uilds/
 HomePreview.Unity/Assets/AssetStoreTools*
-HomePreview.Unity/Assets/HoloToolkit*
+# HomePreview.Unity/Assets/HoloToolkit*
 HomePreview.Unity/Assets/Misc*
 HomePreview.Unity/Assets/3rdParty*
 HomePreview.Unity/Assets/PseudoLighting/Sound/*
