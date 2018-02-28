@@ -10,7 +10,12 @@ public class TextureManager : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		
-	}
+	void Update ()
+    {
+        if (Input.GetKeyDown("space"))
+        {
+            RenderSettings.skybox.mainTexture = (Texture)Resources.Load(path: "Dirrogate_Airport_Stereoscopic_360_VR");
+        }
+
+    }
 }
