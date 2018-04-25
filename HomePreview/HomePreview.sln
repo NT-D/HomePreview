@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomePreviewFunction", "HomePreviewFunction\HomePreviewFunction.csproj", "{9B91AB2B-F48B-4FA8-AEB1-84D3FF0DD671}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RenderTaskHandlerFunction", "RenderTaskHandlerFunction\RenderTaskHandlerFunction.csproj", "{07A4987E-D924-45C7-BFD7-4CB37FF2FCF8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomePreviewCommon", "HomePreviewData\HomePreviewCommon.csproj", "{FCE25943-C2B2-411B-9177-AA660527687C}"
@@ -15,10 +13,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9B91AB2B-F48B-4FA8-AEB1-84D3FF0DD671}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9B91AB2B-F48B-4FA8-AEB1-84D3FF0DD671}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9B91AB2B-F48B-4FA8-AEB1-84D3FF0DD671}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9B91AB2B-F48B-4FA8-AEB1-84D3FF0DD671}.Release|Any CPU.Build.0 = Release|Any CPU
 		{07A4987E-D924-45C7-BFD7-4CB37FF2FCF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{07A4987E-D924-45C7-BFD7-4CB37FF2FCF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{07A4987E-D924-45C7-BFD7-4CB37FF2FCF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
