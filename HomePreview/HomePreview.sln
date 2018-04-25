@@ -5,7 +5,9 @@ VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RenderTaskHandlerFunction", "RenderTaskHandlerFunction\RenderTaskHandlerFunction.csproj", "{07A4987E-D924-45C7-BFD7-4CB37FF2FCF8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomePreviewCommon", "HomePreviewData\HomePreviewCommon.csproj", "{FCE25943-C2B2-411B-9177-AA660527687C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HomePreviewCommon", "HomePreviewData\HomePreviewCommon.csproj", "{FCE25943-C2B2-411B-9177-AA660527687C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HomePreview.Web", "HomePreview.Web\HomePreview.Web.csproj", "{8F03EE3E-F02E-4A91-B52A-705DD122833E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{FCE25943-C2B2-411B-9177-AA660527687C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCE25943-C2B2-411B-9177-AA660527687C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FCE25943-C2B2-411B-9177-AA660527687C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F03EE3E-F02E-4A91-B52A-705DD122833E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F03EE3E-F02E-4A91-B52A-705DD122833E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F03EE3E-F02E-4A91-B52A-705DD122833E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F03EE3E-F02E-4A91-B52A-705DD122833E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
