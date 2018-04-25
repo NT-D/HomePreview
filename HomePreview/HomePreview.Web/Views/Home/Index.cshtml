@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = "Home Preview";
+}
+
+<div class="row">
+    <div class="col-md-4">
+
+
+        <div class="input-group mb-2 mr-sm-2">
+            <label for="roomsize">Room size (m²)</label>
+            <input type="text" class="form-control" id="roomsize" placeholder="22" />
+        </div>
+
+        <br />
+        <div class="form-group">
+            <label for="exampleFormControlSelect1">Direction</label>
+            <select class="form-control" id="Direction">
+                <option value="north">⬆️ North</option>
+                <option value="west">⬅️ West</option>
+                <option value="east">➡️ East</option>
+                <option value="south">⬇️  South</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <label for="time">Time</label>
+            <select class="form-control" id="time">
+                <option value="morning">🌅 Morning</option>
+                <option value="noon">☀️ Noon</option>
+                <option value="evening">🌆 Evening</option>
+                <option value="night">🌙 Night</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="windowsize">Window size</label>
+            <select class="form-control" id="windowsize">
+                <option value="big">Big</option>
+                <option value="medium">Medium</option>
+                <option value="small">Small</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <button type="button" class="btn btn-primary btn-lg btn-block">Submit</button>
+
+    </div>
+</div>
