@@ -13,6 +13,7 @@ using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
 using Newtonsoft;
 using HomePreviewCommon.Data;
+using System.Linq;
 
 namespace RenderTaskHandlerFunction
 {
@@ -28,24 +29,21 @@ namespace RenderTaskHandlerFunction
         [FunctionName(nameof(PostRenderTask))]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Function, "post", Route = null)]HttpRequest req,
-            //IBinder inputCosmosBinder,
             [Queue(queueName: "render-task-queue", Connection = "AzureWebJobsStorage")] ICollector<string> QueueMessage,
             TraceWriter log)
         {
             log.Info("C# HTTP trigger function processed a request.");
-
-            //Read body data in HTTP POST
             string requestBody = new StreamReader(req.Body).ReadToEnd();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
+            var paramData = JsonConvert.DeserializeObject<RenderParam>(requestBody);
 
             //1. Check wheter we got parameter. If it is null, return 400 bad request
-            if (data == null)
+            if (paramData == null)
             {
                 return new BadRequestObjectResult("please input room parameter");
             }
             else
             {
-                //Make CosmosDB client
+                //2. Make CosmosDB client
                 if (Client == null)
                 {
                     Client = new DocumentClient(new Uri(EndpointUrl), PrimaryKey);
@@ -53,24 +51,34 @@ namespace RenderTaskHandlerFunction
                     await Client.CreateDocumentCollectionIfNotExistsAsync(UriFactory.CreateDatabaseUri(DatabaseName), new DocumentCollection { Id = CollectionName });
                 }
 
-                //2. Check wheter same parameter in CosmosDB.
-                var param = new RenderParam() { Roomsize = 10, Windowsize = 2 };//TODO: update with request body
+                //3. Check wheter same parameter exists in CosmosDB.
+                //I want to use FirstorDefault(), but CosmosDb doesn't support it..
+                List<RenderParam> existingParamList = Client.CreateDocumentQuery<RenderParam>(UriFactory.CreateDocumentCollectionUri(DatabaseName, CollectionName), new FeedOptions() { MaxItemCount = 1 })
+                    .Where(p => p.Roomsize == paramData.Roomsize && p.Windowsize == paramData.Windowsize)
+                    .AsEnumerable()
+                    .ToList();
 
+                if (existingParamList.Count != 0)
+                {
+                    //3-1. If exists we return url to the client.
+                    return new OkObjectResult(existingParamList[0]);
+                }
+                else
+                {
+                    //3-2. If it doesn't exists, functions create new document in Cosmos DB and create id for document, then send parameter and uid to Queue.
+                    var response = await Client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(DatabaseName, CollectionName), paramData);
 
-                //2-1. If exists we return url to the client.
+                    //Add image url which create with id and update document
+                    paramData.Id = response.Resource.Id;
+                    paramData.ImageUrl = $"{StorageUrl}/{paramData.Id}.png";
+                    await Client.UpsertDocumentAsync(UriFactory.CreateDocumentCollectionUri(DatabaseName, CollectionName), paramData);
 
-                //2-2. If it doesn't exists, functions create new document in Cosmos DB and get uid, then send parameter and uid to Queue.
-                var response = await Client.CreateDocumentAsync(UriFactory.CreateDocumentCollectionUri(DatabaseName, CollectionName), param);
+                    QueueMessage.Add(JsonConvert.SerializeObject(paramData));
 
-                //Add url created by ID and update document
-                param.Id = response.Resource.Id;
-                param.ImageUrl = $"{StorageUrl}/{param.Id}.png";
-                await Client.UpsertDocumentAsync(UriFactory.CreateDocumentCollectionUri(DatabaseName, CollectionName), param);
+                    //TODO: update 3. Return tetative url to the client
+                    return new OkObjectResult(paramData);
+                }
 
-                QueueMessage.Add(JsonConvert.SerializeObject(param));
-
-                //TODO: update 3. Return tetative url to the client
-                return new OkObjectResult(param);
             }
         }
     }
