@@ -6,12 +6,14 @@
     <div class="col-md-4">
 
 
-        <div class="input-group mb-2 mr-sm-2">
-            <label for="roomsize">Room size (m²)</label>
-            <input type="text" class="form-control" id="roomsize" placeholder="22" />
+        <label for="roomsize">Room size</label>
+        <div class="input-group mb-2 mr-sm-3">
+            <input type="text" class="form-control" id="roomsize" placeholder="22" aria-label="Room size" aria-describedby="basic-addon2" />
+            <div class="input-group-append">
+                <span class="input-group-text" id="basic-addon2">m²</span>
+            </div>
         </div>
 
-        <br />
         <div class="form-group">
             <label for="exampleFormControlSelect1">Direction</label>
             <select class="form-control" id="Direction">
