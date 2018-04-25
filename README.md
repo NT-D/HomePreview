@@ -2,7 +2,12 @@
 
 ## Data scheme
 
-Request
+### Request to Azure Functions
+
+HTTP POST `http://localhost:7071/api/PostRenderTask`
+(You must update url with your environment)
+
+BODY
 ```javascript
 {
     "roomsize":12,
@@ -10,7 +15,8 @@ Request
 }
 ```
 
-Response
+### Response
+You will get following reesponse from Azure Functions. It also send same data to Storage queue as Queue message
 ```javascript
 {
     "id": "5866bda9-2006-45c5-812e-ec3b692a5848",
@@ -21,7 +27,6 @@ Response
 ```
 
 ## How to run
-
 You need to make `local.settings.json` like this for running Azure Functions.
 
 ```javascript
