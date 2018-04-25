@@ -1,19 +1,16 @@
-
+using System;
 using System.IO;
-using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.WebJobs.Host;
-using Newtonsoft.Json;
-using System;
-using System.Threading.Tasks;
 using Microsoft.Azure.Documents;
 using Microsoft.Azure.Documents.Client;
-using Newtonsoft;
+using Newtonsoft.Json;
 using HomePreviewCommon.Data;
-using System.Linq;
 
 namespace RenderTaskHandlerFunction
 {
@@ -24,7 +21,8 @@ namespace RenderTaskHandlerFunction
         private static readonly string PrimaryKey = Environment.GetEnvironmentVariable("CosmosDBKey");
         private static readonly string DatabaseName = "RenderParamDB";
         private static readonly string CollectionName = "RenderParamCollection";
-        private static readonly string StorageUrl = "https://samplestorege.com";
+        private static readonly string StorageUrl = Environment.GetEnvironmentVariable("StorageUrl");
+        private static readonly string StorageContainerName = Environment.GetEnvironmentVariable("StorageContainerName");
 
         [FunctionName(nameof(PostRenderTask))]
         public static async Task<IActionResult> Run(
@@ -52,16 +50,14 @@ namespace RenderTaskHandlerFunction
                 }
 
                 //3. Check wheter same parameter exists in CosmosDB.
-                //I want to use FirstorDefault(), but CosmosDb doesn't support it..
-                List<RenderParam> existingParamList = Client.CreateDocumentQuery<RenderParam>(UriFactory.CreateDocumentCollectionUri(DatabaseName, CollectionName), new FeedOptions() { MaxItemCount = 1 })
-                    .Where(p => p.Roomsize == paramData.Roomsize && p.Windowsize == paramData.Windowsize)
-                    .AsEnumerable()
-                    .ToList();
+                var paramQuery = Client.CreateDocumentQuery<RenderParam>(UriFactory.CreateDocumentCollectionUri(DatabaseName, CollectionName), new FeedOptions() { MaxItemCount = 1 })
+                    .Where(p => p.Roomsize == paramData.Roomsize && p.Windowsize == paramData.Windowsize);
+                var queryResult = paramQuery.AsEnumerable().FirstOrDefault();
 
-                if (existingParamList.Count != 0)
+                if (queryResult != null)
                 {
                     //3-1. If exists we return url to the client.
-                    return new OkObjectResult(existingParamList[0]);
+                    return new OkObjectResult(queryResult);
                 }
                 else
                 {
@@ -70,15 +66,12 @@ namespace RenderTaskHandlerFunction
 
                     //Add image url which create with id and update document
                     paramData.Id = response.Resource.Id;
-                    paramData.ImageUrl = $"{StorageUrl}/{paramData.Id}.png";
-                    await Client.UpsertDocumentAsync(UriFactory.CreateDocumentCollectionUri(DatabaseName, CollectionName), paramData);
+                    paramData.ImageUrl = $"{StorageUrl}/{StorageContainerName}/{paramData.Id}.png";
+                    var res = await Client.ReplaceDocumentAsync(UriFactory.CreateDocumentUri(DatabaseName, CollectionName, paramData.Id), paramData);
 
                     QueueMessage.Add(JsonConvert.SerializeObject(paramData));
-
-                    //TODO: update 3. Return tetative url to the client
-                    return new OkObjectResult(paramData);
+                    return new CreatedResult($"{req.Scheme}://{req.Host}{req.Path}", paramData);
                 }
-
             }
         }
     }
