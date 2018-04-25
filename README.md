@@ -25,6 +25,8 @@ You will get following reesponse from Azure Functions. It also send same data to
     "imageUrl": "https://<Your storage url>/public/5866bda9-2006-45c5-812e-ec3b692a5848.png"
 }
 ```
+- When there is existing object in Cosmos DB, return `200 OK` with data
+- When there is no object (that is, this is new parameter), return `201 Created` with data 
 
 ## How to run
 You need to make `local.settings.json` like this for running Azure Functions.
