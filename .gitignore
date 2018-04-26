@@ -326,3 +326,4 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+HomePreview/HomePreview.Web/Web.config
