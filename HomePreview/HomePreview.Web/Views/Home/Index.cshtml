@@ -21,13 +21,14 @@
     }
 </script>
 }
+@using (Html.BeginForm("OnSubmitButtonClicked", "Home", null, FormMethod.Post))
+{
 <div class="row">
     <div class="col-md-4">
 
-
         <label for="roomsize">Room size : @Model.Roomsize m²</label>
         <div class="input-group mb-2 mr-sm-3">
-            <input type="text" class="form-control" id="roomsize" placeholder="22" aria-label="Room size" aria-describedby="basic-addon2" />
+            <input type="text" class="form-control" id="Roomsize" name="Roomsize" placeholder="22" aria-label="Room size" aria-describedby="basic-addon2" />
             <div class="input-group-append">
                 <span class="input-group-text" id="basic-addon2">m²</span>
             </div>
@@ -55,7 +56,7 @@
         </div>
         <div class="form-group">
             <label for="windowSizeSelect">Window size : @Model.Windowsize</label>
-            <select class="form-control" id="windowsize">
+            <select class="form-control" id="Windowsize" name="Windowsize">
                 <option value="big">Big</option>
                 <option value="medium">Medium</option>
                 <option value="small">Small</option>
@@ -63,7 +64,7 @@
         </div>
     </div>
     <div class="col-md-4">
-        <button type="button" class="btn btn-primary btn-lg btn-block" id="submitButton">Submit</button>
-
+        <input type="submit" value="Submit" />
     </div>
 </div>
+}
