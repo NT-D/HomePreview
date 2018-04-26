@@ -10,21 +10,14 @@ namespace HomePreview.Web.Controllers
     {
         public ActionResult Index()
         {
-            return View();
-        }
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            var viewModel = new Models.HomeViewModel()
+            {
+                Id = "test",
+                Roomsize = 11,
+                Windowsize = 1,
+                ImageUrl = "https://video.360cities.net/littleplanet-360-imagery/360Level43Lounge-8K-stable-noaudio-1024x512.jpg",
+            };
+            return View(viewModel);
         }
     }
 }

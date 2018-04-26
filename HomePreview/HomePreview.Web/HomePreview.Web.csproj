@@ -172,6 +172,7 @@
     </Compile>
     <Compile Include="Hubs\ImageUrlHub.cs" />
     <Compile Include="App_Start\Startup.cs" />
+    <Compile Include="Models\HomeViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -265,7 +266,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -281,6 +281,9 @@
       <Project>{fce25943-c2b2-411b-9177-aa660527687c}</Project>
       <Name>HomePreviewCommon</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
