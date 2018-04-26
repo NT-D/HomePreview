@@ -2,6 +2,20 @@
     ViewBag.Title = "Home Preview";
 }
 
+
+<button id="createCubeButton">Create Cube</button>
+@section script {
+<script type="text/javascript">
+    $(function () {
+        $.connection.hub.start().done(function () {
+            $('#createCubeButton').click(invokeCreateCube);
+        });
+    });
+    function invokeCreateCube() {
+        $.connection.imageUrlHub.server.createCube();
+    }
+</script>
+}
 <div class="row">
     <div class="col-md-4">
 
@@ -46,5 +60,23 @@
     <div class="col-md-4">
         <button type="button" class="btn btn-primary btn-lg btn-block">Submit</button>
 
+    </div>
+</div>
+<ul id="messages" class="list-group"></ul>
+<div class="row">
+    <div class="col-md-4">
+        <h2>Through</h2>
+        <input type="text" id="through-message" class="form-control" value="" />
+        <button id="through-btn" class="btn btn-default">Through</button>
+    </div>
+    <div class="col-md-4">
+        <h2>Echo</h2>
+        <input type="text" id="echo-message" class="form-control" value="" />
+        <button id="echo-btn" class="btn btn-default">Echo</button>
+    </div>
+    <div class="col-md-4">
+        <h2>Echo to All</h2>
+        <input type="text" id="echo2all-message" class="form-control" value="" />
+        <button id="echo2all-btn" class="btn btn-default">Echo to All</button>
     </div>
 </div>

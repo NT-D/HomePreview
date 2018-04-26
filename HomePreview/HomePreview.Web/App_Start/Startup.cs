@@ -6,6 +6,7 @@ using Microsoft.AspNet.SignalR;
 using Owin;
 using Microsoft.Owin;
 
+[assembly: OwinStartup(typeof(HomePreview.Web.Startup))]
 namespace HomePreview.Web
 { 
     public class Startup
