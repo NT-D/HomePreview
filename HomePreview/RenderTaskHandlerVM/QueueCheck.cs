@@ -1,19 +1,21 @@
 ﻿
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.Queue;
+using Newtonsoft.Json;
+using HomePreviewCommon.Data;
 
 namespace RenderTaskHandlerVM
 {
     class QueueCheck
     {
         private static readonly string _queueName = "render-task-queue";
+        private static readonly string _blobName = "public";
+
         private readonly CloudStorageAccount _account;
 
         public QueueCheck(CloudStorageAccount account)
@@ -23,11 +25,17 @@ namespace RenderTaskHandlerVM
 
         public async Task<bool> RunAsync()
         {
-            var client = _account.CreateCloudQueueClient();
-            var queue = client.GetQueueReference(_queueName);
+            var queueClient = _account.CreateCloudQueueClient();
+            var queue = queueClient.GetQueueReference(_queueName);
+
+            var blobClient = _account.CreateCloudBlobClient();
+            var blob = blobClient.GetContainerReference(_blobName);
 
             // If there is no queue named _queueName, create the queue
             await queue.CreateIfNotExistsAsync();
+
+            // If there is no blob named _blobName, create the blob
+            await blob.CreateIfNotExistsAsync();
 
             while (true)
             {
@@ -44,6 +52,9 @@ namespace RenderTaskHandlerVM
                     {
                         if (message != null)
                         {
+                            //read json in the queue
+                            var paramData = JsonConvert.DeserializeObject<RenderParam>(message.AsString);
+
                             using (var file = new FileStream("param.json", FileMode.Create))
                             using (var writer = new StreamWriter(file, Encoding.UTF8))
                             {
@@ -56,6 +67,9 @@ namespace RenderTaskHandlerVM
                             proc.Start();
                             proc.WaitForExit();
 
+                            // upload rendered image named Result.png
+                            CloudBlockBlob cloudBlockBlob = blob.GetBlockBlobReference($"{paramData.Id}.png");
+                            await cloudBlockBlob.UploadFromFileAsync("Result.png");
                             await queue.DeleteMessageAsync(message);
                         }
                     }
