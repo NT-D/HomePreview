@@ -22,7 +22,7 @@ public class SignalRManager : MonoBehaviour
     private void InitializeConnection()
     {
         // the URL which SignalR is implemented (ex: WebApp on Azure)
-        _connection = new HubConnection("http://localhost:57760/");
+        _connection = new HubConnection("http://homepreview.azurewebsites.net/");
         var createCubeProxy = _connection.CreateHubProxy("imageUrlHub");
         createCubeProxy.On<string>(eventName: "create", onData: Create);
         _connection.Start().ContinueWith(x =>
