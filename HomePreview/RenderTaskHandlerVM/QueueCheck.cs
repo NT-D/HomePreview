@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -48,6 +49,13 @@ namespace RenderTaskHandlerVM
                             {
                                 writer.Write(message.AsString);
                             }
+
+                            // start Blender
+                            ProcessStartInfo startInfo = new ProcessStartInfo() { FileName = "/bin/bash", Arguments = "blender -b -P render.py", };
+                            Process proc = new Process() { StartInfo = startInfo, };
+                            proc.Start();
+                            proc.WaitForExit();
+
                             await queue.DeleteMessageAsync(message);
                         }
                     }
