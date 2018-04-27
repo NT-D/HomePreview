@@ -9,7 +9,7 @@ HomePreview.Unity.sln: modified
 project.json: 4FCF72A4D5EDB37E24C206A7BCFE7AF1
 GeneratedProjects\UWP\Assembly-CSharp\project.json: modified
 HomePreview.Unity\App.cs: modified
-HomePreview.Unity\HomePreview.Unity.csproj: 6F9E3561E848C6C3901916B899F9D076
+HomePreview.Unity\HomePreview.Unity.csproj: 7EC0FA80AA7538499D658183721FE43D
 HomePreview.Unity\HomePreview.Unity.csproj.user: modified
 HomePreview.Unity\Package.appxmanifest: 05DA4AC4ADAC6B65705A92818D5C2FE9
 HomePreview.Unity\project.json: 1D02BC64BAC0D041019673A1C4C51737

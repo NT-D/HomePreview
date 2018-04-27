@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.AspNet.SignalR;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -9,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using HomePreview.Web.Hubs;
 
 namespace HomePreview.Web.Controllers
 {
@@ -26,10 +28,10 @@ namespace HomePreview.Web.Controllers
             ViewBag.BackgroundImageUrl = viewModel.ImageUrl;
             return View(viewModel);
         }
+
         [HttpPost]
         public async Task<ActionResult> OnSubmitButtonClicked(int Roomsize, string Windowsize)
         {
-            Debug.WriteLine("l");
             var viewModel = new Models.HomeViewModel()
             {
                 Id = "test",
@@ -43,8 +45,13 @@ namespace HomePreview.Web.Controllers
 
             ViewBag.BackgroundImageUrl = response.imageUrl ?? "https://roadtovrlive-5ea0.kxcdn.com/wp-content/uploads/2014/09/Venice.Still001.jpeg";
 
+            // send the 360 image URL to Unity
+            var hub = GlobalHost.ConnectionManager.GetHubContext<ImageUrlHub>();
+            hub.Clients.All.changeSkyboxImage(response.imageUrl);
+
             return View("Index", viewModel);
         }
+
         private static async Task<ResponseModel> RequestRenderAsync(Models.HomeViewModel parameters)
         {
             var renderRequestApiUrl = ConfigurationManager.AppSettings["FunctionsEndPoint"];

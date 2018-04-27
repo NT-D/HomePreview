@@ -22,7 +22,6 @@
     </script>
 }
 
-
 @using (Html.BeginForm("OnSubmitButtonClicked", "Home", null, FormMethod.Post))
 {
     <div class="row">
@@ -67,6 +66,8 @@
         </div>
         <div class="col-md-4">
             <input type="submit" value="Submit" />
+            <p>Response ID: @Model.Id</p>
+            <p>Response ImageURL: @Model.ImageUrl</p>
         </div>
     </div>
 }
