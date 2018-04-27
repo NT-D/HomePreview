@@ -34,29 +34,30 @@ namespace HomePreview.Web.Controllers
                 Id = "test",
                 Roomsize = Roomsize,
                 Windowsize = ConvertWindowSizeToInt(Windowsize),
-                ImageUrl = "https://video.360cities.net/littleplanet-360-imagery/360Level43Lounge-8K-stable-noaudio-1024x512.jpg",
+                ImageUrl = "",
             };
-            var imageUrl = await RequestRenderAsync();
-            viewModel.ImageUrl = imageUrl;
+            var response = await RequestRenderAsync(viewModel);
+            viewModel.Id = response.id;
+            viewModel.ImageUrl = response.imageUrl;
             return View("Index", viewModel);
         }
-        private static async Task<string> RequestRenderAsync()
+        private static async Task<ResponseModel> RequestRenderAsync(Models.HomeViewModel parameters)
         {
             var renderRequestApiUrl = ConfigurationManager.AppSettings["FunctionsEndPoint"];
-            string imageUrl = "";
+            ResponseModel resModel = null;
+
+            // 現在、部屋の広さと窓の大きさしかサーバ側が対応していないので、取り急ぎリクエストのパラメータの項目を減らす
+            var requestModel = new RequestModel() { roomsize = parameters.Roomsize, windowsize = parameters.Windowsize };
+            var requestObj = JsonConvert.SerializeObject(requestModel);
 
             using (var client = new HttpClient())
             {
-                var json = @"
-{
-    'roomsize':22,
-    'windowsize':11
-}";
-                var content = new StringContent(json, Encoding.UTF8, "application/json");
+                var content = new StringContent(requestObj, Encoding.UTF8, "application/json");
                 var response = await client.PostAsync(renderRequestApiUrl, content);
-                imageUrl = await response.Content.ReadAsStringAsync();
+                var responseJson = await response.Content.ReadAsStringAsync();
+                resModel = JsonConvert.DeserializeObject<ResponseModel>(responseJson);
             }
-            return imageUrl;
+            return resModel;
         }
 
         private int ConvertWindowSizeToInt(string windowSize)
@@ -72,5 +73,17 @@ namespace HomePreview.Web.Controllers
             }
             return 0;
         }
+    }
+    public class RequestModel
+    {
+        public int windowsize { get; set; }
+        public int roomsize { get; set; }
+    }
+    public class ResponseModel
+    {
+        public string id { get; set; }
+        public int roomsize { get; set; }
+        public int windowsize { get; set; }
+        public string imageUrl { get; set; }
     }
 }
