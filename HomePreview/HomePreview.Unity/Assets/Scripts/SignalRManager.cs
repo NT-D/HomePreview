@@ -25,8 +25,9 @@ public class SignalRManager : MonoBehaviour
     {
         // the URL which SignalR is implemented (ex: WebApp on Azure)
         _connection = new HubConnection("http://homepreview.azurewebsites.net/");
-        var createCubeProxy = _connection.CreateHubProxy("imageUrlHub");
-        createCubeProxy.On<string>(eventName: "create", onData: Create);
+        var hubProxy = _connection.CreateHubProxy("imageUrlHub");
+        hubProxy.On<string>(eventName: "create", onData: Create);
+        hubProxy.On<string>(eventName: "changeSkyboxImage", onData: ChangeSkyboxImage);
         _connection.Start().ContinueWith(x =>
             {
                 UnityEngine.Debug.Log(x.Exception?.Message ?? "Connected");
@@ -53,11 +54,12 @@ public class SignalRManager : MonoBehaviour
 
     private void ChangeSkyboxImage(string url)
     {
+        Debug.Log(url);
         // On Unity's mainthread
         _unityThreadContext.Post(d: _ =>
         {
-            RenderSettings.skybox.mainTexture = (Texture)Resources.Load(path: "skysample");
-
+            //RenderSettings.skybox.mainTexture = (Texture)Resources.Load(path: "skysample");
+            _defaultSkybox.mainTexture = (Texture)Resources.Load(path: "skysample");
             //RenderSettings.skybox = null;
         }, state: null);
     }

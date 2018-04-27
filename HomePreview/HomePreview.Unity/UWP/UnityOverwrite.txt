@@ -9,10 +9,10 @@ HomePreview.Unity.sln: modified
 project.json: 4FCF72A4D5EDB37E24C206A7BCFE7AF1
 GeneratedProjects\UWP\Assembly-CSharp\project.json: modified
 HomePreview.Unity\App.cs: modified
-HomePreview.Unity\HomePreview.Unity.csproj: 7EC0FA80AA7538499D658183721FE43D
+HomePreview.Unity\HomePreview.Unity.csproj: E151F9F4890CFBF406A455873496E17F
 HomePreview.Unity\HomePreview.Unity.csproj.user: modified
 HomePreview.Unity\Package.appxmanifest: 05DA4AC4ADAC6B65705A92818D5C2FE9
-HomePreview.Unity\project.json: 1D02BC64BAC0D041019673A1C4C51737
+HomePreview.Unity\project.json: modified
 HomePreview.Unity\Assets\SplashScreen.scale-200.png: 60618416282ED104FD1473935716045D
 HomePreview.Unity\Assets\Square150x150Logo.scale-200.png: E02834B4A5DFB97FF8E212C1CACBB084
 HomePreview.Unity\Assets\Square44x44Logo.scale-200.png: 6C6EF27184ABE9D870A9D564953775DE
