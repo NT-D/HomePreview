@@ -1,82 +1,73 @@
-﻿@{
+﻿@model HomePreview.Web.Models.HomeViewModel
+@{
     ViewBag.Title = "Home Preview";
 }
 
 
 <button id="createCubeButton">Create Cube</button>
 @section script {
-<script type="text/javascript">
-    $(function () {
-        $.connection.hub.start().done(function () {
-            $('#createCubeButton').click(invokeCreateCube);
+    <script type="text/javascript">
+        $(function () {
+            $.connection.hub.start().done(function () {
+                $('#createCubeButton').click(invokeCreateCube);
+                $('#submitButton').click(onSubmitButtonClicked);
+            });
         });
-    });
-    function invokeCreateCube() {
-        $.connection.imageUrlHub.server.createCube();
-    }
-</script>
+        function invokeCreateCube() {
+            $.connection.imageUrlHub.server.createCube();
+        }
+        function onSubmitButtonClicked() {
+            $('body').css('background-image', 'url(@Model.ImageUrl)');
+        }
+    </script>
 }
-<div class="row">
-    <div class="col-md-4">
 
+@using (Html.BeginForm("OnSubmitButtonClicked", "Home", null, FormMethod.Post))
+{
+    <div class="row">
+        <div class="col-md-4">
 
-        <label for="roomsize">Room size</label>
-        <div class="input-group mb-2 mr-sm-3">
-            <input type="text" class="form-control" id="roomsize" placeholder="22" aria-label="Room size" aria-describedby="basic-addon2" />
-            <div class="input-group-append">
-                <span class="input-group-text" id="basic-addon2">m²</span>
+            <label for="roomsize">Room size : @Model.Roomsize m²</label>
+            <div class="input-group mb-2 mr-sm-3">
+                <input type="text" class="form-control" id="Roomsize" name="Roomsize" value="@Model.Roomsize" aria-label="Room size" aria-describedby="basic-addon2" />
+                <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2">m²</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Direction : (not yet)</label>
+                <select class="form-control" id="directionSelect">
+                    <option value="north">⬆️ North</option>
+                    <option value="west">⬅️ West</option>
+                    <option value="east">➡️ East</option>
+                    <option value="south">⬇️  South</option>
+                </select>
             </div>
         </div>
-
-        <div class="form-group">
-            <label for="exampleFormControlSelect1">Direction</label>
-            <select class="form-control" id="Direction">
-                <option value="north">⬆️ North</option>
-                <option value="west">⬅️ West</option>
-                <option value="east">➡️ East</option>
-                <option value="south">⬇️  South</option>
-            </select>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="time">Time : (not yet)</label>
+                <select class="form-control" id="timeSelect">
+                    <option value="morning">🌅 Morning</option>
+                    <option value="noon">☀️ Noon</option>
+                    <option value="evening">🌆 Evening</option>
+                    <option value="night">🌙 Night</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="windowSizeSelect">Window size : @Model.Windowsize</label>
+                <select class="form-control" id="Windowsize" name="Windowsize">
+                    <option value="big">Big</option>
+                    <option value="medium">Medium</option>
+                    <option value="small">Small</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <input type="submit" value="Submit" />
+            <p>Response ID: @Model.Id</p>
+            <p>Response ImageURL: @Model.ImageUrl</p>
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="time">Time</label>
-            <select class="form-control" id="time">
-                <option value="morning">🌅 Morning</option>
-                <option value="noon">☀️ Noon</option>
-                <option value="evening">🌆 Evening</option>
-                <option value="night">🌙 Night</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="windowsize">Window size</label>
-            <select class="form-control" id="windowsize">
-                <option value="big">Big</option>
-                <option value="medium">Medium</option>
-                <option value="small">Small</option>
-            </select>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <button type="button" class="btn btn-primary btn-lg btn-block">Submit</button>
-
-    </div>
-</div>
-<ul id="messages" class="list-group"></ul>
-<div class="row">
-    <div class="col-md-4">
-        <h2>Through</h2>
-        <input type="text" id="through-message" class="form-control" value="" />
-        <button id="through-btn" class="btn btn-default">Through</button>
-    </div>
-    <div class="col-md-4">
-        <h2>Echo</h2>
-        <input type="text" id="echo-message" class="form-control" value="" />
-        <button id="echo-btn" class="btn btn-default">Echo</button>
-    </div>
-    <div class="col-md-4">
-        <h2>Echo to All</h2>
-        <input type="text" id="echo2all-message" class="form-control" value="" />
-        <button id="echo2all-btn" class="btn btn-default">Echo to All</button>
-    </div>
-</div>
+}
