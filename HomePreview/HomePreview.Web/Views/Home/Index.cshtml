@@ -6,65 +6,67 @@
 
 <button id="createCubeButton">Create Cube</button>
 @section script {
-<script type="text/javascript">
-    $(function () {
-        $.connection.hub.start().done(function () {
-            $('#createCubeButton').click(invokeCreateCube);
-            $('#submitButton').click(onSubmitButtonClicked);
+    <script type="text/javascript">
+        $(function () {
+            $.connection.hub.start().done(function () {
+                $('#createCubeButton').click(invokeCreateCube);
+                $('#submitButton').click(onSubmitButtonClicked);
+            });
         });
-    });
-    function invokeCreateCube() {
-        $.connection.imageUrlHub.server.createCube();
-    }
-    function onSubmitButtonClicked() {
-        $('body').css('background-image', 'url(@Model.ImageUrl)');
-    }
-</script>
+        function invokeCreateCube() {
+            $.connection.imageUrlHub.server.createCube();
+        }
+        function onSubmitButtonClicked() {
+            $('body').css('background-image', 'url(@Model.ImageUrl)');
+        }
+    </script>
 }
+
+
 @using (Html.BeginForm("OnSubmitButtonClicked", "Home", null, FormMethod.Post))
 {
-<div class="row">
-    <div class="col-md-4">
+    <div class="row">
+        <div class="col-md-4">
 
-        <label for="roomsize">Room size : @Model.Roomsize m²</label>
-        <div class="input-group mb-2 mr-sm-3">
-            <input type="text" class="form-control" id="Roomsize" name="Roomsize" value="@Model.Roomsize" aria-label="Room size" aria-describedby="basic-addon2" />
-            <div class="input-group-append">
-                <span class="input-group-text" id="basic-addon2">m²</span>
+            <label for="roomsize">Room size : @Model.Roomsize m²</label>
+            <div class="input-group mb-2 mr-sm-3">
+                <input type="text" class="form-control" id="Roomsize" name="Roomsize" value="@Model.Roomsize" aria-label="Room size" aria-describedby="basic-addon2" />
+                <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2">m²</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Direction : (not yet)</label>
+                <select class="form-control" id="directionSelect">
+                    <option value="north">⬆️ North</option>
+                    <option value="west">⬅️ West</option>
+                    <option value="east">➡️ East</option>
+                    <option value="south">⬇️  South</option>
+                </select>
             </div>
         </div>
-
-        <div class="form-group">
-            <label for="exampleFormControlSelect1">Direction : (not yet)</label>
-            <select class="form-control" id="directionSelect">
-                <option value="north">⬆️ North</option>
-                <option value="west">⬅️ West</option>
-                <option value="east">➡️ East</option>
-                <option value="south">⬇️  South</option>
-            </select>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="time">Time : (not yet)</label>
+                <select class="form-control" id="timeSelect">
+                    <option value="morning">🌅 Morning</option>
+                    <option value="noon">☀️ Noon</option>
+                    <option value="evening">🌆 Evening</option>
+                    <option value="night">🌙 Night</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="windowSizeSelect">Window size : @Model.Windowsize</label>
+                <select class="form-control" id="Windowsize" name="Windowsize">
+                    <option value="big">Big</option>
+                    <option value="medium">Medium</option>
+                    <option value="small">Small</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <input type="submit" value="Submit" />
         </div>
     </div>
-    <div class="col-md-4">
-        <div class="form-group">
-            <label for="time">Time : (not yet)</label>
-            <select class="form-control" id="timeSelect">
-                <option value="morning">🌅 Morning</option>
-                <option value="noon">☀️ Noon</option>
-                <option value="evening">🌆 Evening</option>
-                <option value="night">🌙 Night</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="windowSizeSelect">Window size : @Model.Windowsize</label>
-            <select class="form-control" id="Windowsize" name="Windowsize">
-                <option value="big">Big</option>
-                <option value="medium">Medium</option>
-                <option value="small">Small</option>
-            </select>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <input type="submit" value="Submit" />
-    </div>
-</div>
 }

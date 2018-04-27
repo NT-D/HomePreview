@@ -21,8 +21,9 @@ namespace HomePreview.Web.Controllers
                 Id = "test",
                 Roomsize = 11,
                 Windowsize = 1,
-                ImageUrl = "https://video.360cities.net/littleplanet-360-imagery/360Level43Lounge-8K-stable-noaudio-1024x512.jpg",
+                ImageUrl = "https://roadtovrlive-5ea0.kxcdn.com/wp-content/uploads/2014/09/Venice.Still001.jpeg",
             };
+            ViewBag.BackgroundImageUrl = viewModel.ImageUrl;
             return View(viewModel);
         }
         [HttpPost]
@@ -39,6 +40,9 @@ namespace HomePreview.Web.Controllers
             var response = await RequestRenderAsync(viewModel);
             viewModel.Id = response.id;
             viewModel.ImageUrl = response.imageUrl;
+
+            ViewBag.BackgroundImageUrl = response.imageUrl ?? "https://roadtovrlive-5ea0.kxcdn.com/wp-content/uploads/2014/09/Venice.Still001.jpeg";
+
             return View("Index", viewModel);
         }
         private static async Task<ResponseModel> RequestRenderAsync(Models.HomeViewModel parameters)
