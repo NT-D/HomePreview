@@ -14,6 +14,8 @@ Our scope is we can easily put furniture and change room property. For reaching 
 ## Architecture
 ![Architecture](./Images/Architecture.png)
 
+It looks like [Competing Consumers pattern](https://docs.microsoft.com/en-us/azure/architecture/patterns/competing-consumers)
+
 ## Solution structure
 This is map for you to understand sample solution.
 
@@ -28,6 +30,14 @@ This is map for you to understand sample solution.
 * homepreview.blend is sandbox for playing around python script. It includes python script.
 
 ## How to run
+This section describes how to run application. If you can't run correctly, please send feedback through [issue](https://github.com/NT-D/HomePreview/issues).
+
+### Setup Azure services
+1. Because we deeply uses Azure Paas, Serverless and Computing services, you need to have Azure Account. If you don't have it, you can start with [free account](https://azure.microsoft.com/en-us/free/).
+2. For hosting web application for staff, we need to create web server. In Azure you can use managed web server called [Azure Web Apps](https://azure.microsoft.com/en-us/services/app-service/web/). You can learn how to create web apps with [this video](https://azure.microsoft.com/en-us/resources/videos/create-a-web-app-with-nodejs-and-azure-app-service/). In this solution, we uses ASP.NET, so [this tutorial](https://docs.microsoft.com/en-us/azure/app-service/app-service-web-get-started-dotnet-framework) is also useful for you. 
+3. 
+
+
 You need to make `local.settings.json` like this for running Azure Functions.
 
 ```javascript
