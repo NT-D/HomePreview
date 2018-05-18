@@ -85,9 +85,9 @@ You will get following reesponse from Azure Functions. It also send same data to
 
 
 # Team
-- Ken Nagao (Lead Programa Manager)
+- Ken Nagao (Lead Program Manager)
 - Xinyu Liu (PM)
-- Madoka Chiyoda (Lead Software Engineer)
+- [Madoka Chiyoda (Lead Software Engineer)](https://twitter.com/chomado)
 - [Masayuki Ota (SE)](https://twitter.com/masota0517)
 
 ![TeamMembers](./Images/Team.png)
